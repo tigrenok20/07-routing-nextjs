@@ -15,12 +15,13 @@ interface FetchNotesResponse {
 export const FIRST_PAGE = 1;
 
 export const fetchNotes = async (
+  tag: string | undefined,
   search: string,
   page: number,
   perPage: number = 12,
 ): Promise<FetchNotesResponse> => {
   const { data } = await axios.get<FetchNotesResponse>("/notes", {
-    params: { search, page, perPage },
+    params: { tag, search, page, perPage },
     headers: getHeaders(),
   });
 

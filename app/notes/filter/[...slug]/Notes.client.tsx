@@ -16,7 +16,11 @@ import ErrorMessage from "@/components/ErrorMessage/ErrorMessage";
 
 const DEBOUNCE_DELAY_MS = 300;
 
-export default function NotesClient() {
+interface NotesClientProps {
+  tag: string | undefined;
+}
+
+export default function NotesClient({ tag }: NotesClientProps) {
   const [currentPage, setCurrentPage] = useState(FIRST_PAGE);
   const [isAdding, setIsAdding] = useState(false);
   const [search, setSearch] = useState<string>("");
@@ -26,8 +30,8 @@ export default function NotesClient() {
   }, DEBOUNCE_DELAY_MS);
 
   const { data, isLoading, isError } = useQuery({
-    queryKey: ["notes", search, currentPage],
-    queryFn: () => fetchNotes(search, currentPage),
+    queryKey: ["notes", tag, search, currentPage],
+    queryFn: () => fetchNotes(tag, search, currentPage),
     placeholderData: keepPreviousData,
     refetchOnMount: false,
   });
